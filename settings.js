@@ -26,17 +26,17 @@ exports.create = function() {
     port: 8080,
     hostname: '0.0.0.0',
     services: [{
-      name: 'couchdb', 
+      name: 'couchdb',
       label: 'Couchdb server @ local',
       check: 'http',
-      host: '127.0.0.1', 
+      host: '127.0.0.1',
       port: '5984',
       path: '/'
     }, {
-      name: 'blog.bazoud.com', 
+      name: 'blog.bazoud.com',
       label: 'Olivier Bazoud blog: Index',
       check: 'http',
-      host: 'blog.bazoud.com', 
+      host: 'blog.bazoud.com',
       port: '80',
       path: '/'
     }, {
@@ -151,7 +151,7 @@ exports.create = function() {
         access_token_secret: ""
       },
       history: {
-        enable: true,
+        enable: false,
         host: "127.0.0.1",
         port: 6379,
         namespace: "statusdashboard",
@@ -253,4 +253,3 @@ function merge(obj1, obj2) {
   }
   return obj1;
 }
-

@@ -1,6 +1,9 @@
 var path = require('path'),
     url  = require('url'),
     _    = require('underscore')._;
+var favicon = require('serve-favicon');
+var bodyParser = require('body-parser');
+var methodOverride=require('method-override');
 
 var log;
 
@@ -8,7 +11,7 @@ exports.dashboard = function(settings, cb) {
   var rootPath = path.dirname(module.filename),
       api      = require('./api'),
       express  = require('express'),
-      app      = express.createServer();
+      app      = express();
 
   log = settings.logger ? settings.logger : require('util').log;
   /**
@@ -17,19 +20,19 @@ exports.dashboard = function(settings, cb) {
     This application is the main front end. It serves the required statif files,
     and connects the API calls to an HTTP server
   */
-  app.configure(function () {
-    var staticPath = path.join(rootPath, 'public');
+  var staticPath = path.join(rootPath, 'public');
 
-    log("Express server static directory: " + staticPath);
+  log("Express server static directory: " + staticPath);
 
-    app.use(express['static'].call(null, staticPath));
-    app.use(express.favicon(path.join(staticPath, 'favicon.ico')));
-    app.use(express.logger());
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-  });
+  app.use(express['static'].call(null, staticPath));
+  app.use(express.static('./node_modules/socket.io/client-dist'))
+  app.use(favicon(path.join(staticPath, 'favicon.ico')));
+  app.use(bodyParser.urlencoded({
+      extended: true
+  }));
+  app.use(methodOverride());
 
-  app.listen(settings.port, settings.hostname);
+  var server = app.listen(settings.port, settings.hostname);
 
   log('Server running at http://' + settings.hostname + ':' + settings.port);
 
@@ -57,13 +60,14 @@ exports.dashboard = function(settings, cb) {
     https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
   */
   var count = 0;
-  var io = require('socket.io').listen(app);
+  // const server = require('http').createServer(app);
+  const io = require('socket.io')(server);
 
-  io.configure(function () {
-    io.enable('browser client minification');
-    io.enable('browser client etag');
-    io.set('log level', 1);
-  });
+  // io.configure(function () {
+  //   io.enable('browser client minification');
+  //   io.enable('browser client etag');
+  //   io.set('log level', 1);
+  // });
 
   io.sockets.on('connection', function(socket) {
 

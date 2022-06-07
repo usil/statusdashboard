@@ -3,30 +3,21 @@ Status Dashboard
 
 Status Dashboard is status page for your configured services or applications.
 
-Demo @ [Heroku](http://heroku.com) : [http://statusdashboard-node.herokuapp.com](http://statusdashboard-node.herokuapp.com)
-
 Screenshots
 =======
 
-<img src="http://blog.bazoud.com/images/ssd1.png" alt="">
+![](https://i.ibb.co/kJLRS0P/service-dashboard-status.png)
 
-<img src="http://blog.bazoud.com/images/ssd2.png" alt="">
-
-<img src="http://blog.bazoud.com/images/ssd3.png" alt="">
-
-
-Installation
+Requirements
 ============
 
-* npm install statusdashboard
-or
-* npm install git+https://github.com/iobazoud/statusdashboard#master
-
-Optionally, you can install as a global package
+* node >=14
 
 Roadmap
 =======
-* Improve UI: scrollbars, filters, check type column, ...
+* Refactor
+* Improve docs
+* Improve UI: scrollbars, filters, check type column, responsive...
 * Add network services like SMTP, POP3, ...
 * Improve REST API to get / push data
 ...
@@ -34,66 +25,12 @@ Roadmap
 How To Use
 =======
 
-### As an application
-
-Add your entry in settings.js.
-
-<pre class="json">
-settings['xxx'] = {
-...
-};
-</pre>
-
-* export APP_ENV=demo
-* ./bin/statusdashboard
-
-You can override settings with an external settings for private information like passwords, ..
-
-* vi ~/.statusdashboard/settings.js
-<pre class="json">
-exports.create = function() {
-  var appSettings = {
-    port: 8081,
-    services: [{
-      name: 'FTP Local',
-      password: 'xxx'
-    }]
-  };
-  return appSettings;
-};
-}</pre>
-
-* export APP_SETTINGS=~/.statusdashboard/settings.js
-
-### As a node module
-
 ```
-var dashboard = require('statusdashboard').dashboard(settings);
+export APP_ENV=demo
+export PORT=8080
+npm install
+npm run start
 ```
-
-#### Code
-
-##### dashboard.api.addService(serviceObject)
-
-Add a new service to be checked
-
-##### dashboard.api.removeService(ServiceName)
-
-Remove a service to be checked
-
-##### dashboard.api.startChecking
-
-Start the scheduled checks. Automatically is started by default when instanciating dashboard
-
-##### dashboard.api.stopChecking
-
-Stop the scheduled checks
-
-##### dashboard.api.getStatus()
-
-Return the current status of checked services
-
-**All other calls available in api.js are to be used at your own risk. You have been warned**
 
 Service
 =======
@@ -220,4 +157,3 @@ Licence
 =======
 
 Statusdashboard is provided under Apache Software Licence 2.0.
-

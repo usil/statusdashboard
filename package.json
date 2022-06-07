@@ -9,18 +9,24 @@
     "dashboard",
     "service"
   ],
-  "maintainers": [{
-    "name": "Olivier Bazoud",
-    "email": "olivier.bazoud@gmail.com"
-  }],
-  "contributors": [{
-    "name": "Marc Trudel",
-    "email": "mtrudel@wizcorp.jp"
-   }],
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://mths.be/mit"
-  }],
+  "maintainers": [
+    {
+      "name": "Olivier Bazoud",
+      "email": "olivier.bazoud@gmail.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Marc Trudel",
+      "email": "mtrudel@wizcorp.jp"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mths.be/mit"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/obazoud/statusdashboard/issues"
   },
@@ -35,19 +41,23 @@
   "engines": {
     "node": ">=0.6.1"
   },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
   "dependencies": {
-    "socket.io": "0.9.16",
-    "express": "2.5.11",
-    "underscore": "1.4.0",
-    "irc": "0.3.4",
-    "twitter": "0.1.18",
-    "redis": "0.8.1",
-    "hiredis": "0.1.17",
-    "pkginfo": "0.2.3",
-    "nodemailer": "0.3.28",
-    "graphite": "0.0.6",
+    "body-parser": "^1.20.0",
+    "express": "4.18.1",
+    "graphite": "0.1.4",
+    "hiredis": "0.5.0",
+    "ltx": "3.0.0",
+    "method-override": "^3.0.0",
+    "nodemailer": "6.7.5",
+    "pkginfo": "0.4.1",
+    "redis": "4.1.0",
     "request": "2.11.4",
-    "node-xmpp-client": "0.1.4",
-    "ltx": "0.3.4"
+    "serve-favicon": "^2.5.0",
+    "socket.io": "4.5.1",
+    "twitter": "1.7.1",
+    "underscore": "1.13.4"
   }
 }

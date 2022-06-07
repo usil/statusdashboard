@@ -2,13 +2,13 @@ var logger = require('util');
 var client;
 var mysettings;
 
-exports.create = function(api, settings) {
+exports.create = async function(api, settings) {
   mysettings = settings;
   if (settings.plugins && settings.plugins.history && settings.plugins.history.enable) {
     var redis = require("redis");
     console.log('Creating the plugin: ' + __filename);
     client = redis.createClient(settings.plugins.history.port, settings.plugins.history.host, settings.plugins.history.options);
-
+    await client.connect();
     client.on('error', function(err) {
       logger.log("Redis plugin: " + err);
     });
@@ -22,20 +22,20 @@ exports.create = function(api, settings) {
     api.emit("staticContribution", 'history');
 
     var storeStatus = function (service) {
-      client.rpush(settings.plugins.history.namespace + ":" + service.name, JSON.stringify({time: new Date().valueOf(), status: service.status, message: service.message, code:service.statusCode}));
+      client.set(settings.plugins.history.namespace + ":" + service.name, JSON.stringify({time: new Date().valueOf(), status: service.status, message: service.message, code:service.statusCode}));
     }
 
     api.on('up', function(service) {
       storeStatus(service);
-    });  
+    });
 
     api.on('down', function(service) {
       storeStatus(service);
-    });  
+    });
 
     api.on('unknown', function(service) {
       storeStatus(service);
-    });  
+    });
 
     api.on('critical', function(service) {
       storeStatus(service);
@@ -87,4 +87,3 @@ module.exports.allHistory = function(req, res) {
     }
   });
 };
-
